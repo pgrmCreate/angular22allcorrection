@@ -1,17 +1,20 @@
-<!--
-    [(value)]="filtre" : liaison bidirectionnelle avec le model() de Filtre.
-    On passe le signal lui-même (filtre), sans l'appeler.
-    C'est un raccourci pour : [value]="filtre()" (valueChange)="filtre.set($event)"
--->
-<app-filtre [(value)]="filtre" />
+<app-carte>
+    <!-- TP 5, objectif 4 : le compteur vient du service. -->
+    <h2 titre>Mes tâches ({{ store.remaining() }} restantes)</h2>
 
-<ul class="taches">
-    @for (task of visibles(); track task.id) {
-        <!-- On relaie les sorties de TaskItem vers le parent (App). -->
-        <app-task-item [task]="task" (toggled)="toggled.emit($event)" (removed)="removed.emit($event)" />
-    } @empty {
-        <li class="vide">
-            {{ filtre() === 'toutes' ? 'Aucune tâche pour le moment.' : 'Aucune tâche dans ce filtre.' }}
-        </li>
-    }
-</ul>
+    <!-- Plus de (added) : TaskAdd parle directement au service. -->
+    <app-task-add />
+
+    <app-filtre [(value)]="filtre" />
+
+    <ul class="taches">
+        @for (task of visibles(); track task.id) {
+            <!-- TP 5, objectif 5 : la suppression appelle le service. -->
+            <app-task-item [task]="task" (toggled)="store.toggle($event)" (removed)="store.remove($event)" />
+        } @empty {
+            <li class="vide">
+                {{ filtre() === 'toutes' ? 'Aucune tâche pour le moment.' : 'Aucune tâche dans ce filtre.' }}
+            </li>
+        }
+    </ul>
+</app-carte>

@@ -1,38 +1,39 @@
-import { Component, computed, input, output, signal } from '@angular/core';
-import { Task } from '../../models/task';
+import { Component, computed, inject, signal } from '@angular/core';
+import { TaskStore } from '../../core/task-store';
+import { Carte } from '../../shared/carte';
 import { Filtre, FiltreTache } from '../filtre/filtre';
+import { TaskAdd } from '../task-add/task-add';
 import { TaskItem } from '../task-item/task-item';
 
 /**
  * Liste des tâches.
  *
- * TP 4 : chaque tâche est affichée par un TaskItem, et un Filtre choisit les tâches
- * visibles. TaskList ne possède toujours pas les tâches : elle relaie les sorties de
- * TaskItem vers App. Ce « relais » de main en main est exactement ce que le service
- * du TP 5 va supprimer.
+ * TP 5 : TaskList injecte TaskStore. Ses entrées (tasks) et ses sorties (toggled,
+ * removed) du TP 4 ont disparu : elle lit les tâches dans le service et lui demande
+ * directement les modifications. Plus de relais vers App.
+ *
+ * TaskItem garde son entrée et ses sorties : c'est un composant de présentation,
+ * réutilisable, qui n'a pas besoin de connaître le service.
  */
 @Component({
     selector: 'app-task-list',
-    imports: [TaskItem, Filtre],
+    imports: [Carte, TaskAdd, Filtre, TaskItem],
     templateUrl: './task-list.html',
     styleUrl: './task-list.css',
 })
 export class TaskList {
-    readonly tasks = input.required<Task[]>();
-    readonly toggled = output<number>();
-    readonly removed = output<number>();
+    /** protected : le template peut lire store.remaining(), store.toggle()… */
+    protected readonly store = inject(TaskStore);
 
-    /** État local à la liste : le filtre choisi. Partagé avec Filtre par [(value)]. */
     protected readonly filtre = signal<FiltreTache>('toutes');
 
-    /**
-     * Tâches visibles : dérivées de tasks ET de filtre. Le computed se recalcule
-     * seulement quand l'un des deux change, et mémorise le résultat entre-temps.
-     */
+    /** Le computed lit un signal du service : il se recalcule quand les tâches changent. */
     protected readonly visibles = computed(() => {
         const filtre = this.filtre();
-        return this.tasks().filter((t) =>
-            filtre === 'toutes' ? true : filtre === 'actives' ? !t.completed : t.completed,
-        );
+        return this.store
+            .tasks()
+            .filter((t) =>
+                filtre === 'toutes' ? true : filtre === 'actives' ? !t.completed : t.completed,
+            );
     });
 }

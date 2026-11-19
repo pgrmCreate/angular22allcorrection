@@ -3,15 +3,8 @@
 </header>
 
 <main>
-    <!-- TP 4, pour aller plus loin : la Carte projette le titre (attribut « titre ») et le contenu. -->
-    <app-carte>
-        <h2 titre>Mes tâches ({{ remaining() }} restantes)</h2>
-
-        <app-task-add (added)="ajouter($event)" />
-
-        <!-- [tasks]="tasks()" : on passe la VALEUR du signal à l'entrée. -->
-        <app-task-list [tasks]="tasks()" (toggled)="basculer($event)" (removed)="supprimer($event)" />
-    </app-carte>
+    <!-- Plus d'entrées ni de sorties : TaskList trouve les tâches dans TaskStore. -->
+    <app-task-list />
 
     <section>
         <app-member-form />
@@ -19,5 +12,10 @@
 
     <section>
         <app-member-form-signal />
+    </section>
+
+    <!-- TP 5, pour aller plus loin : providers d'un composant. -->
+    <section>
+        <app-demo-injecteurs />
     </section>
 </main>
