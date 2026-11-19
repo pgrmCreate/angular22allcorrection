@@ -1,0 +1,27 @@
+.compteur {
+    color: var(--gris);
+}
+
+.taches {
+    padding: 0;
+    list-style: none;
+}
+
+.taches li {
+    margin-bottom: 6px;
+    padding: 8px 12px;
+    border: 1px solid var(--bordure);
+    border-radius: 8px;
+    background: #fff;
+}
+
+/* Classe posée par la directive appDone. */
+.done {
+    color: var(--gris);
+    text-decoration: line-through;
+}
+
+.vide {
+    font-style: italic;
+    color: var(--gris);
+}

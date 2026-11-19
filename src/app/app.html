@@ -1,7 +1,13 @@
-<!--
-    TP 1 : le template généré par ng new (la page d'accueil Angular, plus de 300 lignes
-    de HTML et de CSS) a été entièrement vidé. Il ne reste qu'un titre.
+<header>
+    <h1>{{ title() }}</h1>
+</header>
 
-    {{ title() }} : interpolation. title est un signal, on le lit en l'appelant.
--->
-<h1>{{ title() }}</h1>
+<main>
+    <h2>Mes tâches</h2>
+
+    <!-- (added) : on écoute la sortie de TaskAdd ; $event contient le titre émis. -->
+    <app-task-add (added)="ajouter($event)" />
+
+    <!-- [tasks] : on passe le tableau de App à l'entrée de TaskList. -->
+    <app-task-list [tasks]="tasks" />
+</main>
