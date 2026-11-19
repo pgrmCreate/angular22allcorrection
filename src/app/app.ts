@@ -1,4 +1,6 @@
 import { Component, signal } from '@angular/core';
+import { MemberForm } from './equipe/member-form/member-form';
+import { MemberFormSignal } from './equipe/member-form-signal/member-form-signal';
 import { Task, TASKS_DEMO } from './models/task';
 import { TaskAdd } from './tasks/task-add/task-add';
 import { TaskList } from './tasks/task-list/task-list';
@@ -9,10 +11,13 @@ import { TaskList } from './tasks/task-list/task-list';
  * TP 2 : App possède le tableau des tâches. Il le transmet à TaskList et reçoit
  * les nouveaux titres de TaskAdd. Au TP 4 ce tableau deviendra un signal, puis
  * il partira dans un service au TP 5.
+ *
+ * TP 3 : App affiche aussi le formulaire des membres, dans ses deux versions.
+ * Au TP 6, chaque page aura sa propre route.
  */
 @Component({
     selector: 'app-root',
-    imports: [TaskList, TaskAdd],
+    imports: [TaskList, TaskAdd, MemberForm, MemberFormSignal],
     templateUrl: './app.html',
     styleUrl: './app.css',
 })

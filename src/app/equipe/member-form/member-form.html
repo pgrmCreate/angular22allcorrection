@@ -1,0 +1,75 @@
+<h2>Membres de l'équipe <small class="aide">(Reactive Forms)</small></h2>
+
+<!--
+    [formGroup] relie la balise <form> au FormGroup de la classe.
+    (ngSubmit) remplace (submit) : Angular empêche le rechargement de la page.
+-->
+<form [formGroup]="form" (ngSubmit)="ajouter()" novalidate>
+    <!--
+        @let évite de répéter form.controls.nom partout.
+        On n'affiche les erreurs qu'après une interaction (touched : le champ a été
+        quitté ; dirty : sa valeur a été modifiée), pas dès l'ouverture de la page.
+    -->
+    @let nom = form.controls.nom;
+    <div class="champ">
+        <label for="nom">Nom *</label>
+        <input id="nom" formControlName="nom" autocomplete="name">
+        @if (nom.invalid && (nom.touched || nom.dirty)) {
+            @if (nom.hasError('required')) {
+                <p class="erreur">Le nom est obligatoire.</p>
+            }
+            @if (nom.hasError('minlength')) {
+                <!-- getError() donne le détail de l'erreur : longueur exigée et longueur actuelle. -->
+                <p class="erreur">
+                    Au moins {{ nom.getError('minlength').requiredLength }} caractères
+                    ({{ nom.getError('minlength').actualLength }} saisis).
+                </p>
+            }
+            @if (nom.hasError('maxlength')) {
+                <p class="erreur">20 caractères maximum.</p>
+            }
+            @if (nom.hasError('interdit')) {
+                <p class="erreur">Le nom « {{ nom.value }} » est réservé.</p>
+            }
+        }
+    </div>
+
+    @let email = form.controls.email;
+    <div class="champ">
+        <label for="email">E-mail *</label>
+        <input id="email" type="email" formControlName="email" autocomplete="email">
+        @if (email.invalid && (email.touched || email.dirty)) {
+            @if (email.hasError('required')) {
+                <p class="erreur">L'e-mail est obligatoire.</p>
+            } @else if (email.hasError('email')) {
+                <p class="erreur">Adresse e-mail invalide.</p>
+            }
+        }
+    </div>
+
+    @let telephone = form.controls.telephone;
+    <div class="champ">
+        <label for="telephone">Téléphone</label>
+        <input id="telephone" type="tel" formControlName="telephone" placeholder="06xxxxxxxx">
+        @if (telephone.hasError('pattern') && (telephone.touched || telephone.dirty)) {
+            <p class="erreur">Format attendu : 06 suivi de 8 chiffres, sans espace (0612345678).</p>
+        }
+    </div>
+
+    <!-- Bouton désactivé tant que le formulaire est invalide. -->
+    <button type="submit" [disabled]="form.invalid">Ajouter le membre</button>
+</form>
+
+<h3>Membres ajoutés ({{ membres().length }})</h3>
+<ul>
+    @for (m of membres(); track m.email) {
+        <li>
+            {{ m.nom }} – {{ m.email }}
+            @if (m.telephone) {
+                – {{ m.telephone }}
+            }
+        </li>
+    } @empty {
+        <li class="aide">Aucun membre pour l'instant.</li>
+    }
+</ul>

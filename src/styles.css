@@ -87,3 +87,22 @@ button.secondaire {
 .succes {
     color: var(--vert);
 }
+
+/* Formulaires (TP 3) */
+.champ {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 420px;
+    margin-bottom: 12px;
+}
+
+.champ label {
+    font-weight: 600;
+}
+
+section + section {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid var(--bordure);
+}

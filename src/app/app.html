@@ -3,11 +3,23 @@
 </header>
 
 <main>
-    <h2>Mes tâches</h2>
+    <section>
+        <h2>Mes tâches</h2>
 
-    <!-- (added) : on écoute la sortie de TaskAdd ; $event contient le titre émis. -->
-    <app-task-add (added)="ajouter($event)" />
+        <!-- (added) : on écoute la sortie de TaskAdd ; $event contient le titre émis. -->
+        <app-task-add (added)="ajouter($event)" />
 
-    <!-- [tasks] : on passe le tableau de App à l'entrée de TaskList. -->
-    <app-task-list [tasks]="tasks" />
+        <!-- [tasks] : on passe le tableau de App à l'entrée de TaskList. -->
+        <app-task-list [tasks]="tasks" />
+    </section>
+
+    <!-- TP 3 : le formulaire réactif… -->
+    <section>
+        <app-member-form />
+    </section>
+
+    <!-- …et sa version Signal Forms, pour comparer. -->
+    <section>
+        <app-member-form-signal />
+    </section>
 </main>

@@ -1,0 +1,58 @@
+<h2>Membres de l'équipe <small class="aide">(Signal Forms)</small></h2>
+
+<!-- Pas de directive de formulaire : on empêche nous-mêmes le rechargement de la page. -->
+<form (submit)="$event.preventDefault(); ajouter()" novalidate>
+    @let f = memberForm;
+
+    <!--
+        f.nom est le CHAMP ; f.nom() est son ÉTAT, fait de signaux :
+        value(), valid(), invalid(), touched(), dirty(), errors()…
+        Les messages viennent du schéma : le template n'a plus de @if par règle.
+    -->
+    <div class="champ">
+        <label for="nom-s">Nom *</label>
+        <input id="nom-s" [formField]="f.nom" autocomplete="name">
+        @if (f.nom().touched()) {
+            @for (e of f.nom().errors(); track e.kind) {
+                <p class="erreur">{{ e.message }}</p>
+            }
+        }
+    </div>
+
+    <div class="champ">
+        <label for="email-s">E-mail *</label>
+        <input id="email-s" type="email" [formField]="f.email" autocomplete="email">
+        @if (f.email().touched()) {
+            @for (e of f.email().errors(); track e.kind) {
+                <p class="erreur">{{ e.message }}</p>
+            }
+        }
+    </div>
+
+    <div class="champ">
+        <label for="telephone-s">Téléphone</label>
+        <input id="telephone-s" type="tel" [formField]="f.telephone" placeholder="06xxxxxxxx">
+        @if (f.telephone().touched()) {
+            @for (e of f.telephone().errors(); track e.kind) {
+                <p class="erreur">{{ e.message }}</p>
+            }
+        }
+    </div>
+
+    <!-- f() : l'état du formulaire entier. -->
+    <button type="submit" [disabled]="f().invalid()">Ajouter le membre</button>
+</form>
+
+<h3>Membres ajoutés ({{ membres().length }})</h3>
+<ul>
+    @for (m of membres(); track m.email) {
+        <li>
+            {{ m.nom }} – {{ m.email }}
+            @if (m.telephone) {
+                – {{ m.telephone }}
+            }
+        </li>
+    } @empty {
+        <li class="aide">Aucun membre pour l'instant.</li>
+    }
+</ul>
