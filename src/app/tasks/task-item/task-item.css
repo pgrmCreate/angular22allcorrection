@@ -1,0 +1,20 @@
+li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+    padding: 8px 12px;
+    border: 1px solid var(--bordure);
+    border-radius: 8px;
+    background: #fff;
+}
+
+.titre {
+    flex: 1;
+}
+
+/* Classe posée par la directive appDone. */
+.done .titre {
+    color: var(--gris);
+    text-decoration: line-through;
+}

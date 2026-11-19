@@ -1,11 +1,10 @@
-import { Component, output } from '@angular/core';
+import { afterNextRender, Component, ElementRef, output, viewChild } from '@angular/core';
 
 /**
- * TP 2 : un champ et un bouton pour ajouter une tâche.
+ * Champ d'ajout d'une tâche.
  *
- * La saisie est lue avec une variable de template (#titre) : pas de formulaire,
- * pas de propriété dans la classe. Le composant ne stocke pas les tâches : il
- * prévient App, qui les possède, avec une sortie (output(), détaillé au module 3).
+ * TP 2 : la saisie est lue avec une variable de template (#titre).
+ * TP 4, pour aller plus loin : le champ reçoit le focus au chargement.
  */
 @Component({
     selector: 'app-task-add',
@@ -13,10 +12,21 @@ import { Component, output } from '@angular/core';
     styleUrl: './task-add.css',
 })
 export class TaskAdd {
-    /** Émet le titre saisi. Nom au passé, comme le recommande Angular : added, removed… */
     readonly added = output<string>();
 
-    /** Reçoit l'élément <input> lui-même, grâce à la variable de template #titre. */
+    /**
+     * viewChild() : requête de vue. Elle renvoie un SIGNAL contenant l'élément qui
+     * porte #titre dans le template. required : il existe forcément (pas de @if autour).
+     */
+    private readonly champ = viewChild.required<ElementRef<HTMLInputElement>>('titre');
+
+    constructor() {
+        // Le DOM n'existe pas encore dans le constructeur : afterNextRender attend
+        // le premier rendu, puis exécute le code une seule fois (et seulement dans le
+        // navigateur, jamais côté serveur en SSR).
+        afterNextRender(() => this.champ().nativeElement.focus());
+    }
+
     protected ajouter(champ: HTMLInputElement): void {
         const titre = champ.value.trim();
         if (titre) {

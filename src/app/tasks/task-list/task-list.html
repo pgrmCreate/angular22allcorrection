@@ -1,28 +1,17 @@
 <!--
-    @let déclare une variable locale au template, recalculée à chaque rendu.
-    Les fonctions fléchées sont permises dans les templates depuis Angular 21.2.
+    [(value)]="filtre" : liaison bidirectionnelle avec le model() de Filtre.
+    On passe le signal lui-même (filtre), sans l'appeler.
+    C'est un raccourci pour : [value]="filtre()" (valueChange)="filtre.set($event)"
 -->
-@let restantes = tasks().filter((t) => !t.completed).length;
-
-<p class="compteur">
-    @if (restantes === 0) {
-        Tout est terminé !
-    } @else {
-        {{ restantes }} tâche(s) restante(s) sur {{ tasks().length }}
-    }
-</p>
+<app-filtre [(value)]="filtre" />
 
 <ul class="taches">
-    <!-- track est obligatoire : il identifie chaque tâche pour ne recréer que ce qui change. -->
-    @for (task of tasks(); track task.id) {
-        <!--
-            [appDone] : notre directive pose la classe « done » si la tâche est terminée.
-            | truncate: 30 : notre pipe raccourcit les titres longs ; [title] affiche le titre
-            complet au survol.
-        -->
-        <li [appDone]="task.completed" [title]="task.title">{{ task.title | truncate: 30 }}</li>
+    @for (task of visibles(); track task.id) {
+        <!-- On relaie les sorties de TaskItem vers le parent (App). -->
+        <app-task-item [task]="task" (toggled)="toggled.emit($event)" (removed)="removed.emit($event)" />
     } @empty {
-        <!-- @empty s'affiche quand le tableau est vide. -->
-        <li class="vide">Aucune tâche pour le moment.</li>
+        <li class="vide">
+            {{ filtre() === 'toutes' ? 'Aucune tâche pour le moment.' : 'Aucune tâche dans ce filtre.' }}
+        </li>
     }
 </ul>

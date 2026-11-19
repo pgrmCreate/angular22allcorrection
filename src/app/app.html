@@ -3,22 +3,20 @@
 </header>
 
 <main>
-    <section>
-        <h2>Mes tâches</h2>
+    <!-- TP 4, pour aller plus loin : la Carte projette le titre (attribut « titre ») et le contenu. -->
+    <app-carte>
+        <h2 titre>Mes tâches ({{ remaining() }} restantes)</h2>
 
-        <!-- (added) : on écoute la sortie de TaskAdd ; $event contient le titre émis. -->
         <app-task-add (added)="ajouter($event)" />
 
-        <!-- [tasks] : on passe le tableau de App à l'entrée de TaskList. -->
-        <app-task-list [tasks]="tasks" />
-    </section>
+        <!-- [tasks]="tasks()" : on passe la VALEUR du signal à l'entrée. -->
+        <app-task-list [tasks]="tasks()" (toggled)="basculer($event)" (removed)="supprimer($event)" />
+    </app-carte>
 
-    <!-- TP 3 : le formulaire réactif… -->
     <section>
         <app-member-form />
     </section>
 
-    <!-- …et sa version Signal Forms, pour comparer. -->
     <section>
         <app-member-form-signal />
     </section>

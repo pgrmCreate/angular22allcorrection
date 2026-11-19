@@ -1,0 +1,10 @@
+<!--
+    Le <li> est dans le composant : <ul> → <app-task-item> → <li>.
+    task() : l'entrée est un signal, on l'appelle pour lire la tâche.
+-->
+<li [appDone]="task().completed">
+    <input type="checkbox" [checked]="task().completed" (change)="toggled.emit(task().id)"
+           [attr.aria-label]="'Tâche terminée : ' + task().title">
+    <span class="titre" [title]="task().title">{{ task().title | truncate: 40 }}</span>
+    <button type="button" class="secondaire" (click)="removed.emit(task().id)">Supprimer</button>
+</li>
