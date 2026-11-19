@@ -5,6 +5,7 @@
 <li [appDone]="task().completed">
     <input type="checkbox" [checked]="task().completed" (change)="toggled.emit(task().id)"
            [attr.aria-label]="'Tâche terminée : ' + task().title">
-    <span class="titre" [title]="task().title">{{ task().title | truncate: 40 }}</span>
+    <!-- TP 6 : le titre mène au détail. Le tableau construit l'URL /tasks/42. -->
+    <a class="titre" [routerLink]="['/tasks', task().id]" [title]="task().title">{{ task().title | truncate: 40 }}</a>
     <button type="button" class="secondaire" (click)="removed.emit(task().id)">Supprimer</button>
 </li>

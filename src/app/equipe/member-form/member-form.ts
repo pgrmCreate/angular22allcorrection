@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { Membre } from '../../models/member';
 import { interdit, NOMS_INTERDITS } from '../interdit';
 
@@ -13,7 +14,7 @@ import { interdit, NOMS_INTERDITS } from '../interdit';
 @Component({
     selector: 'app-member-form',
     // ReactiveFormsModule fournit [formGroup], formControlName et (ngSubmit).
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, RouterLink],
     templateUrl: './member-form.html',
 })
 export class MemberForm {

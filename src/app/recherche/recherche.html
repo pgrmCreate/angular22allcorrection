@@ -1,0 +1,22 @@
+<h2>Rechercher une tâche dans l'API</h2>
+
+<div class="champ">
+    <label for="terme">Texte recherché (2 caractères minimum)</label>
+    <input id="terme" type="search" [formControl]="terme" placeholder="ex. : quis" data-cy="recherche">
+</div>
+
+@if (enCours()) {
+    <p class="aide" role="status">Recherche…</p>
+}
+@if (erreur(); as message) {
+    <p class="erreur" role="alert">{{ message }}</p>
+}
+
+@if (resultats(); as liste) {
+    <p>{{ liste.length }} résultat(s)</p>
+    <ul>
+        @for (t of liste; track t.id) {
+            <li><a [routerLink]="['/tasks', t.id]">{{ t.title }}</a></li>
+        }
+    </ul>
+}

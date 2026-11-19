@@ -1,21 +1,28 @@
 <header>
     <h1>{{ title() }}</h1>
+    <nav>
+        <!-- routerLinkActive ajoute la classe « actif » au lien de la page courante. -->
+        <a routerLink="/tasks" routerLinkActive="actif">Tâches</a>
+        <a routerLink="/equipe" routerLinkActive="actif">Équipe</a>
+        <a routerLink="/recherche" routerLinkActive="actif">Recherche</a>
+        <a routerLink="/demos" routerLinkActive="actif">Démos</a>
+        <!-- Ouvre l'aide dans l'outlet nommé, sans quitter la page. -->
+        <a [routerLink]="[{ outlets: { aide: ['aide'] } }]">Aide</a>
+        <span class="compte">
+            @if (auth.isLogged()) {
+                {{ auth.utilisateur() }}
+                <button type="button" class="secondaire" (click)="deconnecter()">Se déconnecter</button>
+            } @else {
+                <a routerLink="/login" routerLinkActive="actif">Se connecter</a>
+            }
+        </span>
+    </nav>
 </header>
 
 <main>
-    <!-- Plus d'entrées ni de sorties : TaskList trouve les tâches dans TaskStore. -->
-    <app-task-list />
-
-    <section>
-        <app-member-form />
-    </section>
-
-    <section>
-        <app-member-form-signal />
-    </section>
-
-    <!-- TP 5, pour aller plus loin : providers d'un composant. -->
-    <section>
-        <app-demo-injecteurs />
-    </section>
+    <!-- La page correspondant à l'URL s'affiche ici. -->
+    <router-outlet />
 </main>
+
+<!-- Outlet secondaire : /tasks(aide:aide) -->
+<router-outlet name="aide" />

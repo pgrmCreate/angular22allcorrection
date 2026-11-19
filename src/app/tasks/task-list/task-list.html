@@ -1,20 +1,31 @@
 <app-carte>
-    <!-- TP 5, objectif 4 : le compteur vient du service. -->
     <h2 titre>Mes tâches ({{ store.remaining() }} restantes)</h2>
 
-    <!-- Plus de (added) : TaskAdd parle directement au service. -->
     <app-task-add />
 
-    <app-filtre [(value)]="filtre" />
+    <div class="barre">
+        <app-filtre [(value)]="filtre" />
+        <button type="button" class="secondaire" (click)="recharger()" [disabled]="chargement()">
+            Recharger depuis l'API
+        </button>
+    </div>
+
+    @if (chargement()) {
+        <p class="aide" role="status">Chargement des tâches…</p>
+    }
+    @if (erreur(); as message) {
+        <p class="erreur" role="alert">{{ message }}</p>
+    }
 
     <ul class="taches">
         @for (task of visibles(); track task.id) {
-            <!-- TP 5, objectif 5 : la suppression appelle le service. -->
             <app-task-item [task]="task" (toggled)="store.toggle($event)" (removed)="store.remove($event)" />
         } @empty {
-            <li class="vide">
-                {{ filtre() === 'toutes' ? 'Aucune tâche pour le moment.' : 'Aucune tâche dans ce filtre.' }}
-            </li>
+            @if (!chargement()) {
+                <li class="vide">
+                    {{ filtre() === 'toutes' ? 'Aucune tâche pour le moment.' : 'Aucune tâche dans ce filtre.' }}
+                </li>
+            }
         }
     </ul>
 </app-carte>

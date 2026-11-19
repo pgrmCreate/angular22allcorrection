@@ -15,6 +15,7 @@ import {
     output,
     SimpleChanges,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Task } from '../../models/task';
 import { Done } from '../../shared/done';
 import { TruncatePipe } from '../../shared/truncate-pipe';
@@ -38,7 +39,7 @@ let instances = 0;
  */
 @Component({
     selector: 'app-task-item',
-    imports: [Done, TruncatePipe],
+    imports: [Done, TruncatePipe, RouterLink],
     templateUrl: './task-item.html',
     styleUrl: './task-item.css',
 })

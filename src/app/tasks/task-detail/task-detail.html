@@ -1,0 +1,22 @@
+<app-carte>
+    <h2 titre>{{ courante().title }}</h2>
+
+    <p>
+        Statut : <strong>{{ courante().completed ? 'terminée' : 'à faire' }}</strong>
+        <button type="button" class="secondaire" (click)="basculer()">
+            {{ courante().completed ? 'Rouvrir' : 'Terminer' }}
+        </button>
+    </p>
+
+    <!-- Les quatre états d'une ressource. -->
+    @if (author.isLoading()) {
+        <p class="aide">Chargement de l'auteur…</p>
+    } @else if (author.hasValue()) {
+        <p>Auteur : {{ author.value().name }} ({{ author.value().email }})</p>
+    } @else if (author.error()) {
+        <p class="erreur">Auteur introuvable.</p>
+        <button type="button" class="secondaire" (click)="author.reload()">Réessayer</button>
+    }
+
+    <p><a routerLink="/tasks">← Retour à la liste</a></p>
+</app-carte>

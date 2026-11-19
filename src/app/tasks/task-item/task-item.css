@@ -11,6 +11,12 @@ li {
 
 .titre {
     flex: 1;
+    color: inherit;
+    text-decoration: none;
+}
+
+.titre:hover {
+    text-decoration: underline;
 }
 
 /* Classe posée par la directive appDone. */

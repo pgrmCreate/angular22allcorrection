@@ -9,6 +9,7 @@ import {
     required,
     validate,
 } from '@angular/forms/signals';
+import { RouterLink } from '@angular/router';
 import { Membre } from '../../models/member';
 import { NOMS_INTERDITS } from '../interdit';
 
@@ -26,7 +27,7 @@ const MEMBRE_VIDE: Membre = { nom: '', email: '', telephone: '' };
  */
 @Component({
     selector: 'app-member-form-signal',
-    imports: [FormField],
+    imports: [FormField, RouterLink],
     templateUrl: './member-form-signal.html',
 })
 export class MemberFormSignal {
