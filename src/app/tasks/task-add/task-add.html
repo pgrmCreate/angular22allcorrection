@@ -2,9 +2,11 @@
     #titre est une variable de template : elle désigne l'élément <input>.
     On la passe à la méthode, qui lit titre.value. C'est plus lisible et mieux typé
     que $event.target.value (qui demande un transtypage en mode strict).
+
+    TP 8 : les attributs data-cy servent de repères stables aux tests Cypress.
 -->
 <div class="ajout">
     <input #titre placeholder="Nouvelle tâche" aria-label="Titre de la nouvelle tâche"
-           (keyup.enter)="ajouter(titre)">
-    <button type="button" (click)="ajouter(titre)">Ajouter</button>
+           data-cy="nouvelle-tache" (keyup.enter)="ajouter(titre)">
+    <button type="button" data-cy="ajouter" (click)="ajouter(titre)">Ajouter</button>
 </div>
