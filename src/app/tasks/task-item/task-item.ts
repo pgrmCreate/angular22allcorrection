@@ -21,10 +21,10 @@ import { Done } from '../../shared/done';
 import { TruncatePipe } from '../../shared/truncate-pipe';
 
 /**
- * TP 4, objectif 5 : passer à false pour ne plus afficher les étapes du cycle de vie
- * dans la console.
+ * TP 4, objectif 5 : passer à true pour afficher les étapes du cycle de vie dans la
+ * console. Désactivé depuis le TP 7 pour ne pas encombrer la sortie des tests.
  */
-const TRACER_CYCLE_DE_VIE = true;
+const TRACER_CYCLE_DE_VIE = false;
 
 /** Numéro d'instance, pour distinguer les TaskItem dans la console. */
 let instances = 0;
