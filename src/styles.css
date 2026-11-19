@@ -1,1 +1,89 @@
-/* You can add global styles to this file, and also import other style files */
+/*
+ * Styles globaux de TaskFlow.
+ * Ils s'appliquent à toute l'application (contrairement aux styles d'un composant,
+ * isolés par Angular). Ils sont fournis : la mise en forme n'est pas l'objet des TP.
+ */
+:root {
+    --bleu: #193c90;
+    --turquoise: #00a9b0;
+    --gris: #6b7280;
+    --bordure: #d6dbe3;
+    --rouge: #b42318;
+    --vert: #067647;
+    --fond: #f6f8fb;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    line-height: 1.5;
+    color: #1f2937;
+    background: var(--fond);
+}
+
+h1,
+h2,
+h3 {
+    color: var(--bleu);
+}
+
+a {
+    color: var(--bleu);
+}
+
+input,
+select,
+button {
+    font: inherit;
+}
+
+input:not([type='checkbox']):not([type='radio']),
+select {
+    padding: 6px 10px;
+    border: 1px solid var(--bordure);
+    border-radius: 6px;
+    background: #fff;
+}
+
+input.ng-invalid.ng-touched,
+input[aria-invalid='true'] {
+    border-color: var(--rouge);
+}
+
+button {
+    padding: 6px 14px;
+    border: 0;
+    border-radius: 6px;
+    color: #fff;
+    background: var(--bleu);
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button.secondaire {
+    color: #1f2937;
+    background: #e5e7eb;
+}
+
+.erreur {
+    margin: 4px 0;
+    font-size: 0.9em;
+    color: var(--rouge);
+}
+
+.aide {
+    font-size: 0.9em;
+    color: var(--gris);
+}
+
+.succes {
+    color: var(--vert);
+}
